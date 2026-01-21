@@ -13,6 +13,7 @@ import json
 import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
+import certifi
 
 # --- 2. CONFIGURATION & DATABASE CONNECTION ---
 ENCRYPTION_KEY = "sG5fR8eN2kL6wA3zV9bD1uXoQpY4tM7c"
@@ -21,8 +22,12 @@ MONGO_URI = "mongodb+srv://firebase_db_user:8edkAtPooOvq7hrG@teachtheworldfounda
 app = FastAPI()
 
 try:
+    client = pymongo.MongoClient(
+        MONGO_URI,
+        tlsCAFile=certifi.where()  # <--- Forces Python to use the correct certificates
+    )
     # tlsAllowInvalidCertificates=True helps with some local Windows SSL issues
-    client = pymongo.MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
+    #client = pymongo.MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
     db = client["SchoolDB"]
     profiles_col = db["StudentProfiles"]
     activity_col = db["ActivityLogs"]

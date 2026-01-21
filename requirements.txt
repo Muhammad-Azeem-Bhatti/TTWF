@@ -5,3 +5,4 @@ dnspython
 pycryptodome
 python-multipart
 pydantic
+certifi
