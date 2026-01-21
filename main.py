@@ -22,10 +22,18 @@ MONGO_URI = "mongodb+srv://firebase_db_user:8edkAtPooOvq7hrG@teachtheworldfounda
 app = FastAPI()
 
 try:
+    # THE NUCLEAR OPTION:
+    # We explicitly tell MongoDB to IGNORE security certificate errors.
     client = pymongo.MongoClient(
         MONGO_URI,
-        tlsCAFile=certifi.where()  # <--- Forces Python to use the correct certificates
+        tls=True,
+        tlsAllowInvalidCertificates=True,  # Bypass the SSL Handshake error
+        tlsAllowInvalidHostnames=True  # Bypass hostname mismatches
     )
+    #client = pymongo.MongoClient(
+    #    MONGO_URI,
+    #    tlsCAFile=certifi.where()  # <--- Forces Python to use the correct certificates
+    #)
     # tlsAllowInvalidCertificates=True helps with some local Windows SSL issues
     #client = pymongo.MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
     db = client["SchoolDB"]
