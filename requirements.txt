@@ -1,4 +1,7 @@
 fastapi
 uvicorn
-pandas
+pymongo[srv]
+dnspython
+pycryptodome
 python-multipart
+pydantic
