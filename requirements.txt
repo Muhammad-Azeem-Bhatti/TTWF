@@ -5,4 +5,4 @@ dnspython
 pycryptodome
 python-multipart
 pydantic
-certifi
+certifipython-dotenv

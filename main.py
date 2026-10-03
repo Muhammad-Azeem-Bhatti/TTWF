@@ -14,10 +14,17 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import certifi
+import os
+from dotenv import load_dotenv
 
 # --- 2. CONFIGURATION & DATABASE CONNECTION ---
-ENCRYPTION_KEY = "sG5fR8eN2kL6wA3zV9bD1uXoQpY4tM7c"
-MONGO_URI = "mongodb+srv://firebase_db_user:8edkAtPooOvq7hrG@teachtheworldfoundation.vpeurku.mongodb.net/?appName=TeachTheWorldFoundation"
+# Secrets come from environment variables (or a local .env file, never committed).
+# See .env.example for the names.
+load_dotenv()
+ENCRYPTION_KEY = os.environ.get("ENCRYPTION_KEY")
+MONGO_URI = os.environ.get("MONGO_URI")
+if not ENCRYPTION_KEY or not MONGO_URI:
+    raise RuntimeError("Set MONGO_URI and ENCRYPTION_KEY in the environment or in a .env file (see .env.example).")
 
 app = FastAPI()
 
